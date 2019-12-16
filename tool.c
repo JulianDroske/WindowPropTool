@@ -186,42 +186,9 @@ void initProp(){
 	}
 }
 
-/*char** parseProp(char*a){
-	int n = strl(a);
-	static char** ret = NULL;
-	ret = (char**)malloc(2*sizeof(char*));
-	char* name = (char*) malloc(255*sizeof(char));
-	clear(name,255);
-	char* var = (char*) malloc(255*sizeof(char));
-	clear(var,255);
-	ret[0] = name;
-	// ret[1] = var;
-	ret[1] = NULL;
-	int swt=0;
-	for(int i=0,pos=0;i<n;++i){
-		if(pos>255){
-			if(swt) return ret;
-			return 0;
-		}
-		if(a[i]=='='){
-			ret[1] = var;
-			swt=1;
-			pos=0;
-			continue;
-		}
-		if(swt){
-			var[pos] = a[i];
-		}else{
-			name[pos] = a[i];
-		}
-		pos++;
-	}
-	return ret;
-}*/
-
 void operate(){
 	if(prop==NULL){
-		printf("Error! No Prop Set.\n");
+		printf("Error: No Prop Set.\n");
 		return 1;
 	}
 	
@@ -244,6 +211,9 @@ void operate(){
 		POINT p = {0,0};
 		if(GetCursorPos(&p)){
 			handle = WindowFromPoint(p);
+		}else{
+			printf("Error: Cannot Get Handle From Cursor.\n");
+			exit(1);
 		}
 	}
 	
@@ -255,7 +225,7 @@ void operate(){
 			if(strp(wintitle,title)){
 				printf("Same Window Detected.\n");
 			}else{
-				printf("Different Windows Detected.\n");
+				printf("Error: Different Windows Detected.\n");
 				return 1;
 			}
 		}else{
@@ -264,7 +234,7 @@ void operate(){
 	}
 	
 	if(!handle){
-		printf("Error! No Window Found.\n");
+		printf("Error: Cannot Get Handle.\n");
 		return 1;
 	}
 	
